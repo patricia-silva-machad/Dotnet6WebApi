@@ -11,7 +11,7 @@ app.MapGet("/AddHeader", (HttpResponse response) => {
     return new {Name = "Patricia", Age = 0};
     });
 //enviar informaçoes atraves do body
-app.MapPost("/saveproduct", (Product product) => {
+app.MapPost("/products", (Product product) => {
     ProductRepository.Add(product);
 });
 //consulta, passando por parametros (tudo que estiver depois do ?) via query
@@ -21,7 +21,7 @@ app.MapGet("/getProduct", ([FromQuery] string dateStart, [FromQuery] string date
 });
 //atraves da rota (quando é obrigatorio)
 //api.app.com/user/{code}
-app.MapGet("/getProduct/{code}", ([FromRoute] String code) => {
+app.MapGet("/products/{code}", ([FromRoute] String code) => {
     var product = ProductRepository.GetBy(code);
     return product;
 });
@@ -30,12 +30,12 @@ app.MapGet("/getproductbyheader", (HttpRequest request) => {
     return request.Headers["product-code"].ToString();
 });
 
-app.MapPut("/editproduct", (Product product) => {
+app.MapPut("/products", (Product product) => {
     var productSaved = ProductRepository.GetBy(product.Code);
     productSaved.Name = product.Name;
 });
 
-app.MapDelete("/deleteproduct/{code}", ([FromRoute] String code) => {
+app.MapDelete("/products/{code}", ([FromRoute] String code) => {
     var productSaved = ProductRepository.GetBy(code);
     ProductRepository.Remove(productSaved);
 });

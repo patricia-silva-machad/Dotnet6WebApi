@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bNDzm4jF+byVp8NbEZIKN4y2WAfseFYFYCfMSAAM0wZge60IrAEOv5EQuxy1qZNHkJ4SUQbbGbCmSdO0xZp51g==",
+  "dgSpecHash": "O4d8+MG40Og/ypBwkt+dyeobzOKh4EIvUR0mFoaWwxHA4Ht0MA0EFwFCVDKrlzawjz6+cEXRgivCvKTmGkvsVQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\patri\\.NET\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\patri\\Dotnet API 6\\dotnetApi6\\api\\api.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

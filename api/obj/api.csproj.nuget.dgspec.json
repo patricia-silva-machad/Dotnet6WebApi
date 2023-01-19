@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\patri\\.NET\\api\\api.csproj": {}
+    "C:\\Users\\patri\\Dotnet API 6\\dotnetApi6\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\patri\\.NET\\api\\api.csproj": {
+    "C:\\Users\\patri\\Dotnet API 6\\dotnetApi6\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\patri\\.NET\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\patri\\Dotnet API 6\\dotnetApi6\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\patri\\.NET\\api\\api.csproj",
+        "projectPath": "C:\\Users\\patri\\Dotnet API 6\\dotnetApi6\\api\\api.csproj",
         "packagesPath": "C:\\Users\\patri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\patri\\.NET\\api\\obj\\",
+        "outputPath": "C:\\Users\\patri\\Dotnet API 6\\dotnetApi6\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\patri\\AppData\\Roaming\\NuGet\\NuGet.Config"
