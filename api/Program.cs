@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+var configuration = app.Configuration;
+ProductRepository.Init(configuration);
 
 app.MapGet("/", () => "Hello World 4!");
 app.MapGet("/user", () => new {Name = "Patricia", Age = 0});
@@ -47,14 +49,24 @@ app.MapDelete("/products/{code}", ([FromRoute] String code) => {
 });
 
 
+//endpoint so vai ser encontrado se estiver no ambiente staging
+if(app.Environment.IsStaging())
+    app.MapGet("/configuration/database", (IConfiguration configuration) => {
+        return Results.Ok($"{configuration["database:connection"]}/{configuration["database:port"]}");
+    });
+
+
 app.Run();
 
 public static class ProductRepository {
-    public static List<Product> Products { get; set; }
+    public static List<Product> Products { get; set; } = Products = new List<Product>();
 
-    public static void Add(Product product){
-        if(Products == null)
-            Products = new List<Product>();
+    public static void Init(IConfiguration configuration) {
+        var products = configuration.GetSection("Products").Get<List<Product>>();
+        Products = products;
+    }
+
+    public static void Add(Product product){      
         Products.Add(product);
     }
 
