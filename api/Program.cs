@@ -1,7 +1,13 @@
 //criar a aplicacao web (hosting)
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//configuração de serviços para poder utilizar os endpoints quando necessario;
+builder.Services.AddDbContext<ApplicationDbContext>();
+
+
 var app = builder.Build();
 var configuration = app.Configuration;
 ProductRepository.Init(configuration);
@@ -85,4 +91,13 @@ public class Product {
     public String Code { get; set; }
 
     public String Name { get; set; }
+}
+
+public class ApplicationDbContext: DbContext{
+    
+    public DbSet<Product> Products { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    => options.UseSqlServer(
+        "Server=localhost;Database=Products;User Id=sa;Password=@sql2019;MultipleActiveResultSets=true;Encrypt=YES;TrustServerCertificate=YES");
 }
