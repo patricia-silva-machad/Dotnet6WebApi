@@ -1,11 +1,10 @@
 //criar a aplicacao web (hosting)
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //configuração de serviços para poder utilizar os endpoints quando necessario;
-builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddSqlServer<ApplicationDbContext>(builder.Configuration["Database:SqlServer"]);
 
 
 var app = builder.Build();
@@ -54,79 +53,10 @@ app.MapDelete("/products/{code}", ([FromRoute] String code) => {
     return Results.Ok();
 });
 
-
 //endpoint so vai ser encontrado se estiver no ambiente staging
 if(app.Environment.IsStaging())
     app.MapGet("/configuration/database", (IConfiguration configuration) => {
         return Results.Ok($"{configuration["database:connection"]}/{configuration["database:port"]}");
     });
 
-
 app.Run();
-
-public static class ProductRepository {
-    public static List<Product> Products { get; set; } = Products = new List<Product>();
-
-    public static void Init(IConfiguration configuration) {
-        var products = configuration.GetSection("Products").Get<List<Product>>();
-        Products = products;
-    }
-
-    public static void Add(Product product){      
-        Products.Add(product);
-    }
-
-    public static Product GetBy(string code){
-        return Products.FirstOrDefault(p => p.Code == code);
-    }
-
-    public static void Remove(Product product) {
-        Products.Remove(product);
-    }
-}
-
-public class Category {
-    public int Id { get; set; }
-
-    public string Name { get; set; }
-}
-
-public class Tag {
-    public int Id { get; set; }
-
-    public string Name { get; set; }
-
-    public int ProductId { get; set; }
-}
-
-public class Product {
-
-    public int Id { get; set; }
-    public String Code { get; set; }
-
-    public String Name { get; set; }
-
-    public string Description { get; set; }
-
-    public int CategoryId { get; set; }
-
-    public Category Category { get; set; }
-
-    public List<Tag> Tags { get; set; }
-}
-
-public class ApplicationDbContext: DbContext{
-    
-    protected override void OnModelCreating(ModelBuilder builder){
-        builder.Entity<Product>()
-            .Property(p => p.Description).HasMaxLength(500).IsRequired(false);
-        builder.Entity<Product>()
-            .Property(p => p.Name).HasMaxLength(120).IsRequired();
-        builder.Entity<Product>()
-            .Property(p => p.Code).HasMaxLength(10).IsRequired();
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    => options.UseSqlServer(
-        "Server=localhost;Database=Products;User Id=sa;Password=@sql2019;MultipleActiveResultSets=true;Encrypt=YES;TrustServerCertificate=YES");
-}
