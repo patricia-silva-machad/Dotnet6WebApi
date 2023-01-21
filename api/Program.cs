@@ -85,17 +85,34 @@ public static class ProductRepository {
     }
 }
 
+public class Category {
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+}
 
 public class Product {
 
+    public int Id { get; set; }
     public String Code { get; set; }
 
     public String Name { get; set; }
+
+    public string Description { get; set; }
+
+    public Category Category { get; set; }
 }
 
 public class ApplicationDbContext: DbContext{
     
-    public DbSet<Product> Products { get; set; }
+    protected override void OnModelCreating(ModelBuilder builder){
+        builder.Entity<Product>()
+            .Property(p => p.Description).HasMaxLength(500).IsRequired(false);
+        builder.Entity<Product>()
+            .Property(p => p.Name).HasMaxLength(120).IsRequired();
+        builder.Entity<Product>()
+            .Property(p => p.Code).HasMaxLength(10).IsRequired();
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     => options.UseSqlServer(
